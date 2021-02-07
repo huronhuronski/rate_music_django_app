@@ -2,17 +2,9 @@ from django.db import models
 
 from datetime import date
 
-GENDERS = [
-    ('bl', 'black'),
-    ('de', 'death'),
-    ('sl', 'sludge'),
-    ('do', 'doom'),
-    ('hv', 'heavy'),
-]
-
 
 class Album(models.Model):
-    title = models.CharField(max_length=300)
+    title = models.CharField(max_length=200)
     band = models.ForeignKey('Band', on_delete=models.SET_NULL)
     rating = models.DecimalField(decimal_places=1)
     date_released = models.DateField()
@@ -25,9 +17,9 @@ class Band(models.Model):
     date_formed = models.DateField()
     year_active = date.today() - date_formed
     active = models.BooleanField()
-    gender = models.CharField()
+    gender = models.ManyToManyField('Gender')
     label_current = models.ForeignKey('Label', on_delete=models.SET_NULL)
-    labels_past = models.CharField()
+    labels_past = models.ManyToManyField('Label')
     country = models.CharField()
     location = models.CharField()
     links = models.CharField()
@@ -47,8 +39,11 @@ class Label(models.Model):
     website = models.URLField()
     webshop = models.URLField()
     email = models.EmailField()
-    label_gender = models.CharField(
-        max_length=2,
-        choices=GENDERS,
-        default=models.SET_NULL
-    )
+
+
+class Gender(models.Model):
+    gender = models.CharField(max_length=30)
+
+
+class Geolocation(models.Model):
+
