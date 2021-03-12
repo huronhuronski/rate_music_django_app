@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Suppose to be band details...</h1>
+    <br>
+    <h3>{{ band.name }}</h3>
+    <br>
+    <p>Current label: {{ band.label_current }}</p>
+    <p>Country: {{ band.country }}</p>
+    <p>City: {{ band.city }}</p>
+    {% if band.gender.all %}
+        <p>Gender: </p>
+            {% for gender in band.gender.all %}
+                <li>{{ gender.gender }}</li>
+            {% endfor %}
+    {% endif %}
+    <br>
+    <h5>Albums:</h5>
+    {% for album in albums %}
+            <li>{{ album.title }}</li>
+    {% endfor %}
+
+    <br><br><br>
+    <a href="{% url 'home' %}">Home</a>
+</body>
+</html>
